@@ -22,7 +22,7 @@
 
 
 # Regex for emoji names like :sparkling_heart:
-regex=':([A-Za-z1-9_])+:'
+regex=':([A-Za-z0-9_])+:'
 
 # Gets emoji from 'hash'
 # Returns raw emoji character or word
@@ -32,6 +32,7 @@ to_emoji () {
     if [ $key == "${keys[$x]}" ]; then
       echo -n "${values[$x]}"
       local value="${values[$x]}"
+      break
     fi
   done
   if [ -z $value ]; then
@@ -49,7 +50,7 @@ emojify () {
   local emojified=$'\b'
 
   if [[ $line =~ $regex ]]; then
-    IFS=' '; read -a line_arr <<< $line
+    IFS=' ' read -a line_arr <<< $line
 
     for word in "${line_arr[@]}"; do
       if [[ $word =~ $regex ]]; then
